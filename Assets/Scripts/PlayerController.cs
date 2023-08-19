@@ -1,9 +1,5 @@
-﻿using System;
-using Unity.VisualScripting;
-using UnityEditor.UIElements;
+﻿
 using UnityEngine;
-using UnityEngine.Events;
-
 
 public class PlayerController : MonoBehaviour
 
@@ -11,11 +7,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public float moveSpeed = 5f;
     [SerializeField] public float jumpForce = 5f;
 
-    private bool isJumping = false;
+    
     private Rigidbody2D rb;
     private float horizontalMove = 0f;
     private bool isFacingRight = true;
+   
     public Animator animator;
+    public  static bool isJumping = false;
    
 
     private void Awake()
@@ -41,7 +39,7 @@ public class PlayerController : MonoBehaviour
         if (!isJumping)
         {
             rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
-            isJumping = false;
+            isJumping = true;
             animator.SetBool("IsJumping", true);
         }
     }
@@ -54,6 +52,14 @@ public class PlayerController : MonoBehaviour
             Vector2 localScale = transform.localScale;
             localScale.x *= -1f;
             transform.localScale = localScale;
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground") && GetComponent<Rigidbody2D>().velocity.y <= 0)
+        {
+            PlayerController.isJumping = false;
+            animator.SetBool("IsJumping", false);
         }
     }
 }
