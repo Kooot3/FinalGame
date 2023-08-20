@@ -67,7 +67,7 @@ namespace DefaultNamespace
            {
                isJumping = false;
                animator.SetBool("IsJumping", false);
-               Debug.Log("Ground" + isJumping);
+               //Debug.Log("Ground" + isJumping);
            }
        }
        
