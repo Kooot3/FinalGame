@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     private int _currentTarget;
     
     
+    
     private void Flip()
     {
         Vector3 scale = transform.localScale;
