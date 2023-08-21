@@ -1,4 +1,5 @@
-﻿using Unity.VisualScripting;
+﻿using Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -69,6 +70,8 @@ namespace DefaultNamespace
                animator.SetBool("IsJumping", false);
                //Debug.Log("Ground" + isJumping);
            }
+
+          
        }
        
    }

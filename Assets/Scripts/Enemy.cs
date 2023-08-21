@@ -5,14 +5,16 @@ using UnityEngine.SceneManagement;
 public class Enemy : MonoBehaviour
 {
     public List<Transform> points;
-    public int nextID=0;
+    public int nextID = 0;
     int idChangeValue = 1;
     public float speed = 2;
-    
+    private Animator animator;
+
     private void Reset()
     {
         Init();
     }
+
     void Init()
     {
         GetComponent<BoxCollider2D>().isTrigger = true;
@@ -22,10 +24,14 @@ public class Enemy : MonoBehaviour
         GameObject waypoints = new GameObject("Waypoints");
         waypoints.transform.SetParent(root.transform);
         waypoints.transform.position = root.transform.position;
-        GameObject p1 = new GameObject("Point1"); p1.transform.SetParent(waypoints.transform);p1.transform.position = root.transform.position;
-        GameObject p2 = new GameObject("Point2"); p2.transform.SetParent(waypoints.transform);p2.transform.position = root.transform.position;
+        GameObject p1 = new GameObject("Point1");
+        p1.transform.SetParent(waypoints.transform);
+        p1.transform.position = root.transform.position;
+        GameObject p2 = new GameObject("Point2");
+        p2.transform.SetParent(waypoints.transform);
+        p2.transform.position = root.transform.position;
 
-        
+
         points = new List<Transform>();
         points.Add(p1.transform);
         points.Add(p2.transform);
@@ -39,7 +45,7 @@ public class Enemy : MonoBehaviour
     void MoveToNextPoint()
     {
         Transform goalPoint = points[nextID];
-        
+
         if (goalPoint.transform.position.x > transform.position.x)
         {
             transform.localScale = new Vector3(-1, 1, 1);
@@ -48,9 +54,10 @@ public class Enemy : MonoBehaviour
         {
             transform.localScale = new Vector3(1, 1, 1);
         }
-        transform.position = Vector2.MoveTowards(transform.position,goalPoint.position,speed*Time.deltaTime);
-      
-        if(Vector2.Distance(transform.position, goalPoint.position)<0.2f)
+
+        transform.position = Vector2.MoveTowards(transform.position, goalPoint.position, speed * Time.deltaTime);
+
+        if (Vector2.Distance(transform.position, goalPoint.position) < 0.2f)
         {
             if (nextID == points.Count - 1)
             {
@@ -61,9 +68,11 @@ public class Enemy : MonoBehaviour
             {
                 idChangeValue = 1;
             }
+
             nextID += idChangeValue;
         }
     }
+
     //Объект уничтожает игрока при столкновении,тем самым перезапускает сцену 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -72,13 +81,15 @@ public class Enemy : MonoBehaviour
             SceneManager.LoadScene(0);
         }
     }
+
     //Чтобы задестроить противника при его убийстве
-private void OnTriggerEnter2D(Collider2D collision)
-    { 
-        if(collision.gameObject.CompareTag("Player"))
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
         {
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
+
     }
 }
 //public float speed;
