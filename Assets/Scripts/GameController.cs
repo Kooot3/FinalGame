@@ -4,6 +4,11 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.Events;
 
+//По геймплею
+//1 Персонаж цепляется за уступы, если бежать в сторону уступа то будет парить в воздухе
+//2 После прыжка может застрять анимация прыжка, и в этом состоянии не может прыгать
+
+//Controller слово паразит, не несёт смысловой нагрузки, лучше использовать EntryPoint, Game & etc
 public class GameController : MonoBehaviour
 
 {
